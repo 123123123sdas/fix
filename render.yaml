@@ -2,10 +2,15 @@ services:
   - type: worker
     name: telegram-bot
     env: python
-    repo: https://github.com/YOUR_USERNAME/YOUR_REPO_NAME
-    branch: main
-    buildCommand: pip install -r requirements.txt
+    plan: free
+    buildCommand: |
+      curl -sSL https://install.python-poetry.org | python3 -
+      export PATH="$HOME/.local/bin:$PATH"
+      pip install --upgrade pip
+      pip install -r requirements.txt
     startCommand: python bot.py
+    environment:
+      pythonVersion: 3.11.9
     envVars:
       - key: BOT_TOKEN
         sync: false
